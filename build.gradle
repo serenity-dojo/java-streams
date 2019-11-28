@@ -1,0 +1,37 @@
+defaultTasks 'clean', 'test'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+apply plugin: 'java'
+
+ext {
+    slf4jVersion = '1.7.7'
+    junitVersion = '5.5.2'
+    assertJVersion = '3.8.0'
+    logbackVersion = '1.2.3'
+    gradleVersion = '5.6.2'
+}
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+version = '1.0.0'
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
+}
+
+wrapper {
+    gradleVersion = "${gradleVersion}"
+}
