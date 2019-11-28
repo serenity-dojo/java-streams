@@ -6,11 +6,13 @@ By the end of the modules, you will have implemented a small project that uses a
 The overall aim of the project is to import a bank feed and perform a number of enrichment and reporting operations. 
 The format of the feed is a comma-separated list of values, in the following format:
 
+```
 | Date	        | Description	| Counterparty     | Deposit | Withdrawl | Balance |
 | 24/10/2018	| GAS BILL MAY  | GAS COMPANY      | 0       | 50	     | 1000    |
 | 25/10/2018	| INV 000002    | CAFE VIENNA      | 0       | 5.25	     | 994.75  |
 | 27/10/2018	| NEWSPAPER     | CORNER PRESS LTD | 0       | 15.00	 | 979.75  |
 | 27/10/2018	| SALARY JUNE   | EMPLOYERS INC    | 2000.00 | 0         | 2979.75 |
+```
 
 ## Module 1 - Simple Stream Aggregation
 The first module starts off simple: you will perform a number of manipulations on a stream of transaction feeds in the form of Java objects.
@@ -41,7 +43,8 @@ The tasks in this module are:
 The transactions we receive have both a description and a counterparty. 
 The counterparty is the parson or company who is paying or being paid. 
 In this module, you will group transactions by counterparty, to find the list of counterparties in a set of transactions. 
-For the purpose of this exercises, we are interested only in spending, not deposits.
+You will implement a new class, [SpendingPerCounterparty](src/main/java/streams/exercises/moneymanager/SpendingPerCounterparty.java),
+For the purpose of this exercises, we are interested only in spending, not withdrawals.
 
 The tasks in this module are:
     - Find the list of distinct counterparties, in alphabetical order
