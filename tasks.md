@@ -8,9 +8,9 @@ The format of the feed is a comma-separated list of values, in the following for
 
 ```
 | Date	        | Description	| Counterparty     | Deposit | Withdrawl | Balance |
-| 24/10/2018	| GAS BILL MAY  | GAS COMPANY      | 0       | 50	     | 1000    |
-| 25/10/2018	| INV 000002    | CAFE VIENNA      | 0       | 5.25	     | 994.75  |
-| 27/10/2018	| NEWSPAPER     | CORNER PRESS LTD | 0       | 15.00	 | 979.75  |
+| 24/10/2018	| GAS BILL MAY  | GAS COMPANY      | 0       | 50        | 1000    |
+| 25/10/2018	| INV 000002    | CAFE VIENNA      | 0       | 5.25      | 994.75  |
+| 27/10/2018	| NEWSPAPER     | CORNER PRESS LTD | 0       | 15.00     | 979.75  |
 | 27/10/2018	| SALARY JUNE   | EMPLOYERS INC    | 2000.00 | 0         | 2979.75 |
 ```
 
@@ -39,6 +39,8 @@ The tasks in this module are:
     - Find the largest withdrawal by implementing the `getLargestWithdrawal()` method.
     - Find the largest overall transaction by implementing the `getLargestTransaction()` method. Note that this method should return a positive number for deposits and a negative number for withdrawals.
 
+The unit tests you need to make pass are defined in [Module_2](src/test/java/streams/exercises/moneymanager/tasks/Module_2.java).
+
 ## Module 3 - Grouping by counterparty
 The transactions we receive have both a description and a counterparty. 
 The counterparty is the parson or company who is paying or being paid. 
@@ -49,3 +51,5 @@ For the purpose of this exercises, we are interested only in spending, not withd
 The tasks in this module are:
     - Find the list of distinct counterparties, in alphabetical order
     - Find all the transactions for a given counterparty
+
+The unit tests you need to make pass are defined in [Module_3](src/test/java/streams/exercises/moneymanager/tasks/Module_3.java).
