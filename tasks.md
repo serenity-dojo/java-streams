@@ -41,7 +41,12 @@ The tasks in this module are:
 
 The unit tests you need to make pass are defined in [Module_2](src/test/java/streams/exercises/moneymanager/tasks/Module_2.java).
 
-## Module 3 - Grouping by counterparty
+## Module 3 - Finding transactions
+
+
+The unit tests you need to make pass are defined in [Module_4](src/test/java/streams/exercises/moneymanager/tasks/Module_3.java).
+
+## Module 4 - Grouping by counterparty
 The transactions we receive have both a description and a counterparty. 
 The counterparty is the parson or company who is paying or being paid. 
 In this module, you will group transactions by counterparty, to find the list of counterparties in a set of transactions. 
@@ -52,4 +57,5 @@ The tasks in this module are:
     - Find the list of distinct counterparties, in alphabetical order
     - Find all the transactions for a given counterparty
 
-The unit tests you need to make pass are defined in [Module_3](src/test/java/streams/exercises/moneymanager/tasks/Module_3.java).
+The unit tests you need to make pass are defined in [Module_4](src/test/java/streams/exercises/moneymanager/tasks/Module_4.java).
+

@@ -11,70 +11,24 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static streams.exercises.moneymanager.domain.TransactionFeedEntry.trx;
 
-@DisplayName("Calculate spending per counterparty")
+@DisplayName("Finding sample transactions")
 class Module3Specs {
 
     List<TransactionFeedEntry> NO_TRANSACTIONS = new ArrayList<>();
 
-    @DisplayName("Task 3.1: Find the list of counterparties")
+    @DisplayName("Task 3.1: Find an example of a transaction above a certain amount")
     @Nested
-    class FindAllTheCounterparties {
+    class FindAllMatchingTransactions {
 
         @Test
-        @DisplayName("When there are no transactions")
+        @DisplayName("When there are no transactions at all")
         void forNoTransactions() {
-            assertThat(SpendingPerCounterparty.from(NO_TRANSACTIONS.stream()).getCounterparties()).isEmpty();
+            assertThat(FindASampleTransaction.from(NO_TRANSACTIONS.stream()).thatExceed(10.0).isPresent()).isFalse();
         }
 
         @Test
-        @DisplayName("When there is one counterparty")
-        void forTransactionsFromOneCounterparty() {
-            Stream<TransactionFeedEntry> transactionFeed =
-                    Stream.of(
-                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
-                            trx("Coffee", "Coffee and Co", 15.0, 0, 10.0),
-                            trx("Coffee", "Coffee and Co", 5.0, 0, 10.0)
-                    );
-
-            assertThat(SpendingPerCounterparty.from(transactionFeed).getCounterparties()).containsExactly("Coffee and Co");
-        }
-
-        @Test
-        @DisplayName("When there are several counterparties")
-        void forTransactionsFromSeveralCounterparty() {
-            Stream<TransactionFeedEntry> transactionFeed =
-                    Stream.of(
-                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
-                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
-                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
-                    );
-
-            assertThat(SpendingPerCounterparty.from(transactionFeed).getCounterparties())
-                    .containsExactly("Coffee and Co", "Laundry Inc", "TFL");
-        }
-    }
-
-    @DisplayName("Task 3.2: Find the transactions for a given counterparty")
-    @Nested
-    class FindTransactionsForACounterparty {
-        @Test
-        @DisplayName("When there are no matching transactions")
-        void forTransactionsFromNoMatchingCounterparty() {
-            Stream<TransactionFeedEntry> transactionFeed =
-                    Stream.of(
-                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
-                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
-                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
-                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
-                    );
-
-            assertThat(SpendingPerCounterparty.from(transactionFeed).getPurchasesFrom("No Such Counterparty")).isEmpty();
-        }
-
-
-        @Test
-        @DisplayName("When there are deposits and withdrawals")
-        void whenThereAreBothDepositsAndWithdrawals() {
+        @DisplayName("When there is one matching deposit")
+        void whereThereIsAMatchingDeposit() {
             Stream<TransactionFeedEntry> transactionFeed =
                     Stream.of(
                             trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
@@ -83,24 +37,36 @@ class Module3Specs {
                             trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
                     );
 
-            assertThat(SpendingPerCounterparty.from(transactionFeed).getCounterparties())
-                    .containsExactly("Coffee and Co", "Laundry Inc", "TFL");
+            assertThat(FindASampleTransaction.from(transactionFeed).thatExceed(100).get().getDeposit()).isEqualTo(1000);
         }
 
+
         @Test
-        @DisplayName("When there are several matching transactions")
-        void forTransactionsFromSeveralCounterparty() {
+        @DisplayName("When there is one matching withdrawal")
+        void whereThereIsAMatchingWithdrawal() {
             Stream<TransactionFeedEntry> transactionFeed =
                     Stream.of(
                             trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
-                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 15.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 5.0, 0, 10.0)
+                    );
+
+            assertThat(FindASampleTransaction.from(transactionFeed).thatExceed(12).get().getWithdrawal()).isEqualTo(15);
+        }
+
+        @Test
+        @DisplayName("When there is one matching withdrawal")
+        void whereThereAreAMatchingWithdrawalsAndDeposits() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
                             trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Salary", "Employers Inc", 0, 1000, 1990),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
                             trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
                     );
 
-            assertThat(SpendingPerCounterparty.from(transactionFeed).getPurchasesFrom("Coffee and Co"))
-                    .hasSize(2)
-                    .allMatch(entry -> entry.getCounterparty().equals("Coffee and Co"));
+            assertThat(FindASampleTransaction.from(transactionFeed).thatExceed(12).get().getDeposit()).isEqualTo(1000);
         }
+
     }
 }
