@@ -26,4 +26,8 @@ public class SpendingPerCounterparty {
     public List<TransactionFeedEntry> getPurchasesFrom(String counterParty) {
         throw new UnfinishedExerciseException();
     }
+
+    public double getTotalSpendingFor(String counterParty) {
+        throw new UnfinishedExerciseException();
+    }
 }

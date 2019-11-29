@@ -30,7 +30,7 @@ The unit tests you need to make pass are defined in [Module_1](src/test/java/str
 ## Module 2 - Minimum and maximum values
 In this module you will implement a new class, [MinMaxTransactions](src/main/java/streams/exercises/moneymanager/MinMaxTransactions.java),
 which will find the biggest and smallest deposits and withdrawals, as well as the largest overall transaction. 
-Note that these methods return an `OptionalDouble`, which should be empty if there rae no transactions of the requested type.
+Note that these methods return an `OptionalDouble`, which should be empty if there are no transactions of the requested type.
 
 The tasks in this module are:
     - Find the smallest deposit by implementing the `getSmallestDeposit()` method.
@@ -42,7 +42,12 @@ The tasks in this module are:
 The unit tests you need to make pass are defined in [Module_2](src/test/java/streams/exercises/moneymanager/tasks/Module_2.java).
 
 ## Module 3 - Finding transactions
+In this module you will implement a new class, [FindASampleTransaction](src/main/java/streams/exercises/moneymanager/FindASampleTransaction.java), 
+which will find an example of a transaction matching certain criteria. 
 
+The tasks in this module are:
+    - Find an example of a transaction that exceeds a certain amount (either a deposit or a withdrawal)
+    - Find an example of a transaction for a given counterparty that exceeds a certain amount (either a deposit or a withdrawal)
 
 The unit tests you need to make pass are defined in [Module_4](src/test/java/streams/exercises/moneymanager/tasks/Module_3.java).
 
@@ -59,3 +64,16 @@ The tasks in this module are:
 
 The unit tests you need to make pass are defined in [Module_4](src/test/java/streams/exercises/moneymanager/tasks/Module_4.java).
 
+
+## Module 5 - Checking for invalid transactions
+In this module we will check for invalid transactions. 
+The counterparty is the parson or company who is paying or being paid. 
+You will implement a new class to do this, [SpendingPerCounterparty](src/main/java/streams/exercises/moneymanager/TransactionChecker.java),
+You will need to use the anyMatches() stream method.
+
+The tasks in this module are:
+    - Check for transactions with a deposit and withdrawal value of zero
+    - Check for transactions with a negative deposit or withdrawal value
+    - Check for transactions with a missing or empty counterparty
+
+The unit tests you need to make pass are defined in [Module_5](src/test/java/streams/exercises/moneymanager/tasks/Module_5.java).

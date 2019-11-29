@@ -34,4 +34,11 @@ public class SpendingPerCounterparty {
                 .filter(entry -> entry.getCounterparty().equals(counterParty))
                 .collect(toList());
     }
+
+    public double getTotalSpendingFor(String counterParty) {
+        return transactionFeed
+                .filter(entry -> entry.getCounterparty().equals(counterParty))
+                .mapToDouble(entry -> entry.getWithdrawal() - entry.getDeposit() )
+                .sum();
+    }
 }

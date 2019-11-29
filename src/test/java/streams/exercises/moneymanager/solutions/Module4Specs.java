@@ -104,4 +104,52 @@ class Module4Specs {
                     .allMatch(entry -> entry.getCounterparty().equals("Coffee and Co"));
         }
     }
+
+    @DisplayName("Task 4.3: Find the total transactions for a given counterparty")
+    @Nested
+    class FindTotalTransactionsForACounterparty {
+        @Test
+        @DisplayName("Total should be zero when there are no matching transactions")
+        void forTransactionsFromNoMatchingCounterparty() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
+                    );
+
+            assertThat(SpendingPerCounterparty.from(transactionFeed).getTotalSpendingFor("No Such Counterparty")).isEqualTo(0);
+        }
+
+        @Test
+        @DisplayName("Total should include all the transactions for a given counterparty")
+        void forTransactionsFromoMatchingCounterparties() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
+                    );
+
+            assertThat(SpendingPerCounterparty.from(transactionFeed).getTotalSpendingFor("Coffee and Co")).isEqualTo(20.0);
+        }
+
+        @Test
+        @DisplayName("Total should include both withdrawals and deposits")
+        void forTransactionsFromoMatchingCounterpartiesWithWithdrawalsAndDeposits() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 0, 5.0, 10.0),
+                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
+                    );
+
+            assertThat(SpendingPerCounterparty.from(transactionFeed).getTotalSpendingFor("Coffee and Co")).isEqualTo(15.0);
+        }
+
+    }
 }

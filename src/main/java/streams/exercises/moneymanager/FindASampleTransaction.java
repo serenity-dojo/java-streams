@@ -20,4 +20,8 @@ public class FindASampleTransaction {
     public Optional<TransactionFeedEntry> thatExceed(double amount) {
         throw new UnfinishedExerciseException();
     }
+
+    public Optional<TransactionFeedEntry> forACounterpartyThatExceed(String counterParty, double amount) {
+        throw new UnfinishedExerciseException();
+    }
 }

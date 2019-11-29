@@ -22,8 +22,16 @@ public class FindASampleTransaction {
 
 
     public Optional<TransactionFeedEntry> thatExceed(double amount) {
-        return transactionFeed.
-                filter(entry -> entry.getDeposit() > amount || entry.getWithdrawal() > amount)
+        return transactionFeed
+                .filter(entry -> entry.getDeposit() > amount || entry.getWithdrawal() > amount)
                 .findFirst();
     }
+
+    public Optional<TransactionFeedEntry> forACounterpartyThatExceed(String counterParty, double amount) {
+        return transactionFeed
+                .filter(entry -> entry.getCounterparty().equals(counterParty))
+                .filter(entry -> entry.getDeposit() > amount || entry.getWithdrawal() > amount)
+                .findFirst();
+    }
+
 }

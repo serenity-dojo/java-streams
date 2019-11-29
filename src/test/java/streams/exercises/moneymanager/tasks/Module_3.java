@@ -70,6 +70,62 @@ class Module_3 {
 
             assertThat(FindASampleTransaction.from(transactionFeed).thatExceed(12).get().getDeposit()).isEqualTo(1000);
         }
+    }
+    @DisplayName("Task 3.2: Find an example of a transaction above a certain amount for a given counterparty")
+    @Nested
+    class FindATransactionThatExceedsACertainThresholdForAGivenCounterparty {
 
+        @Test
+        @DisplayName("When there are no transactions at all")
+        void forNoTransactions() {
+            assertThat(streams.exercises.moneymanager.solutions.FindASampleTransaction.from(NO_TRANSACTIONS.stream())
+                    .forACounterpartyThatExceed("Coffee and Co",10.0).isPresent())
+                    .isFalse();
+        }
+
+        @Test
+        @DisplayName("When there no one matching deposit")
+        void whereThereIsNoMatchingDeposit() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Salary", "Employers Inc", 0, 1000, 1990),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
+                    );
+
+            assertThat(streams.exercises.moneymanager.solutions.FindASampleTransaction.from(transactionFeed)
+                    .forACounterpartyThatExceed("TFL",100).isPresent()).isFalse();
+        }
+
+        @Test
+        @DisplayName("When there is one matching deposit")
+        void whereThereIsAMatchingDeposit() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Salary", "Employers Inc", 0, 1000, 1990),
+                            trx("Oyster Card", "TFL", 25.0, 0, 10.0),
+                            trx("Dry Cleaning", "Laundry Inc", 5.0, 0, 10.0)
+                    );
+
+            assertThat(streams.exercises.moneymanager.solutions.FindASampleTransaction.from(transactionFeed)
+                    .forACounterpartyThatExceed("TFL",20).get().getWithdrawal()).isEqualTo(25);
+        }
+
+
+        @Test
+        @DisplayName("When there are multiple matching withdrawals")
+        void whereThereIsAMatchingWithdrawal() {
+            Stream<TransactionFeedEntry> transactionFeed =
+                    Stream.of(
+                            trx("Oyster Card", "TFL", 5.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 10.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 15.0, 0, 10.0),
+                            trx("Coffee", "Coffee and Co", 5.0, 0, 10.0)
+                    );
+
+            assertThat(streams.exercises.moneymanager.solutions.FindASampleTransaction.from(transactionFeed).forACounterpartyThatExceed("Coffee and Co",12).get().getWithdrawal()).isEqualTo(15);
+        }
     }
 }
