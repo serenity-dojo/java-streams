@@ -7,6 +7,7 @@ import streams.exercises.moneymanager.SpendingPerCounterparty;
 import streams.exercises.moneymanager.domain.TransactionFeedEntry;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 

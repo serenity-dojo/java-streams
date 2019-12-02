@@ -25,7 +25,7 @@ public class TransactionChecker {
     private final Predicate<TransactionFeedEntry> HAS_MISSING_COUNTERPARTY= (entry -> entry.getCounterparty() == null || entry.getCounterparty().trim().isEmpty());
 
     private final List<Predicate<TransactionFeedEntry>> RULES = asList(
-            HAS_ZERO_VALUE,HAS_NEGATIVE_VALUES,HAS_MISSING_COUNTERPARTY
+            HAS_ZERO_VALUE, HAS_NEGATIVE_VALUES, HAS_MISSING_COUNTERPARTY
     );
 
     public boolean hasInvalidTransactions() {
